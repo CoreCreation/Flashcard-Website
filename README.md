@@ -4,3 +4,33 @@ This is an ongoing project. It is a full stack flashcard system using Spring Boo
 # Currently Completed:
 * Connection of server to database
 * Creation of endpoints for creating, updating, and deleting flashcards
+
+## Current API:
+### GET
+```
+/api/v1/flashcard
+```
+Needs more work, get one card for example
+
+### POST
+```
+/api/v1/flashcard
+```
+Needs the information in the body:
+```
+{"front":"Hello","back":"你好"}
+```
+Content-Type: application/json
+
+### DELETE
+```
+/api/v1/?id=
+```
+
+### PUT
+```
+/api/v1/flashcard?id=
+front=
+&back=
+```
+Front and back are optional

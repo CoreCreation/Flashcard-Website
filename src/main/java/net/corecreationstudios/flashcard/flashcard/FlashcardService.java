@@ -35,19 +35,21 @@ public class FlashcardService {
     }
 
     @Transactional
-    public void updateFlashcardFront(Long id, String front){
-        Flashcard card = flashcardRepository.findById(id).orElseThrow(() -> new IllegalStateException("Student with id " + id + " does not exist"));
-        if(flashcardRepository.findFlashcardByFront(front).isPresent()){
-            throw new IllegalStateException("Card already exists");
+    public void updateFlashcard(Long id, String front, String back){
+        if(front == null && back == null){
+            return;
         }
-        card.setFront(front);
-    }
-
-    @Transactional
-    public void updateFlashcardBack(Long id, String back){
         Flashcard card = flashcardRepository.findById(id).orElseThrow(() -> new IllegalStateException("Student with id " + id + " does not exist"));
-        if(back != card.getBack()){
-            card.setBack(back);
+        if(front != null){
+            if(flashcardRepository.findFlashcardByFront(front).isPresent()){
+                throw new IllegalStateException("Card already exists");
+            }
+            card.setFront(front);
+        }
+        if(back != null) {
+            if(back != card.getBack()){
+                card.setBack(back);
+            }
         }
     }
 

@@ -35,15 +35,12 @@ public class FlashcardController {
         flashcardService.addNewFlashcard(card);
     }
 
-    //I suspect that these two can be made into one mapping
     @PutMapping(path = "{cardId}")
-    public void updateFlashcardFront(@PathVariable("cardId") Long id, @RequestParam(value = "front") String front){
-        flashcardService.updateFlashcardFront(id, front);
-    }
+    public void updateFlashcardFront(@PathVariable("cardId") Long id, 
+                                     @RequestParam(required = false) String front, 
+                                     @RequestParam(required = false) String back) {
 
-    @PutMapping(path = "{cardId}")
-    public void updateFlashcardBack(@PathVariable("cardId") Long id, @RequestParam(value = "back") String back){
-        flashcardService.updateFlashcardFront(id, back);
+        flashcardService.updateFlashcard(id, front, back);
     }
 
     @DeleteMapping(path = "{cardId}")
