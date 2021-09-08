@@ -31,3 +31,6 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### Client Code, for now
+/src/client
