@@ -34,3 +34,4 @@ build/
 
 ### Client Code, for now
 /src/client
+/src/Flashcard-Client

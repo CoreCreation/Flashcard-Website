@@ -15,18 +15,18 @@ public class FlashcardService {
     private final FlashcardRepository flashcardRepository;
 
     @Autowired
-    public FlashcardService(FlashcardRepository flashcardRepository){
+    public FlashcardService(FlashcardRepository flashcardRepository) {
         this.flashcardRepository = flashcardRepository;
     }
 
-    public List<Flashcard> getFlashcards(){
-		return flashcardRepository.findAll();
-	}
+    public List<Flashcard> getFlashcards() {
+        return flashcardRepository.findAll();
+    }
 
-    public void addNewFlashcard(Flashcard card){
+    public void addNewFlashcard(Flashcard card) {
         Optional<Flashcard> flashcardByFront = flashcardRepository.findFlashcardByFront(card.getFront());
 
-        if(flashcardByFront.isPresent()) {
+        if (flashcardByFront.isPresent()) {
             throw new IllegalStateException("Flashcard already exists");
         }
 
@@ -35,27 +35,26 @@ public class FlashcardService {
     }
 
     @Transactional
-    public void updateFlashcard(Long id, String front, String back){
-        if(front == null && back == null){
+    public void updateFlashcard(Flashcard card) {
+        if (card.getFront() == null ||
+        card.getFront() == "" || 
+        card.getBack() == null || 
+        card.getBack() == "") {
             return;
         }
-        Flashcard card = flashcardRepository.findById(id).orElseThrow(() -> new IllegalStateException("Student with id " + id + " does not exist"));
-        if(front != null){
-            if(flashcardRepository.findFlashcardByFront(front).isPresent()){
-                throw new IllegalStateException("Card already exists");
-            }
-            card.setFront(front);
+        Flashcard cardInDB = flashcardRepository.findById(card.getId())
+                .orElseThrow(() -> new IllegalStateException("Flashcard with id " + card.getId() + " does not exist"));
+        if (card.getFront() != cardInDB.getFront()) {
+            cardInDB.setFront(card.getFront());
         }
-        if(back != null) {
-            if(back != card.getBack()){
-                card.setBack(back);
-            }
+        if (cardInDB.getBack() != card.getBack()) {
+            cardInDB.setBack(card.getBack());
         }
     }
 
-    public void deleteFlashcard(Long id){
+    public void deleteFlashcard(Long id) {
         boolean exists = flashcardRepository.existsById(id);
-        if(!exists) {
+        if (!exists) {
             throw new IllegalStateException("Card with id" + id + " does not exist");
         }
         flashcardRepository.deleteById(id);

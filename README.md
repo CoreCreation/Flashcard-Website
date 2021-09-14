@@ -24,13 +24,15 @@ Content-Type: application/json
 
 ### DELETE
 ```
-/api/v1/?id=
+/api/v1/flashcard/{id}
 ```
 
 ### PUT
 ```
-/api/v1/flashcard?id=
-front=
-&back=
+/api/v1/flashcard/{id}
 ```
-Front and back are optional
+Needs the information in the body:
+```
+{"front":"Hello","back":"你好"}
+```
+Content-Type: application/json

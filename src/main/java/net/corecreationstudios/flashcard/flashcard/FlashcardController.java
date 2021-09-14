@@ -1,6 +1,7 @@
 package net.corecreationstudios.flashcard.flashcard;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 @RestController
+@CrossOrigin
 @RequestMapping(path = "api/v1/flashcard")
 public class FlashcardController {
 
@@ -36,10 +38,9 @@ public class FlashcardController {
 
     @PutMapping(path = "{cardId}")
     public void updateFlashcardFront(@PathVariable("cardId") Long id, 
-                                     @RequestParam(required = false) String front, 
-                                     @RequestParam(required = false) String back) {
-
-        flashcardService.updateFlashcard(id, front, back);
+                                     @RequestBody Flashcard card) {
+        
+        flashcardService.updateFlashcard(card);
     }
 
     @DeleteMapping(path = "{cardId}")
